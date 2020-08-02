@@ -6,6 +6,7 @@ use App\Repositories\Interfaces\AuthRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,18 @@ class AuthController extends Controller
         return $this->authRepository->login($request->all());
 
     }
+
+    public function redirectToProvider()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+
+        return $user;
+    }    
 
     public function logout(Request $request)
     {

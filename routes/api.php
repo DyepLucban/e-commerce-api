@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', 'AuthController@login');
-Route::resource('/user', 'UserController');
-Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
+Route::get('/login/google', 'AuthController@redirectToProvider');
+Route::get('/login/google/callback', 'AuthController@handleProviderCallback');
 Route::resource('/send-email', 'EmailController');
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::resource('/product', 'ProductController');
 	Route::resource('/cart', 'CartController');
 	Route::resource('/order', 'OrderController');
+	Route::post('/logout', 'AuthController@logout');
 });
