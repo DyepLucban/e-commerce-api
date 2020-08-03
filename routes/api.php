@@ -17,6 +17,7 @@ Route::post('/login', 'AuthController@login');
 Route::get('/login/{service}', 'AuthController@redirectToProvider');
 Route::get('/login/{service}/callback', 'AuthController@handleProviderCallback');
 Route::resource('/send-email', 'EmailController');
+Route::resource('/user', 'UserController');
 
 Route::middleware('auth:sanctum')->group(function () {
 	Route::get('/auth_user', 'AuthController@getAuthUser');

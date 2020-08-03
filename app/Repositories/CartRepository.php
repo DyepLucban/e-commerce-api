@@ -16,9 +16,7 @@ class CartRepository implements CartRepositoryInterface
         try {
             
             $cart = Cart::where('user_id', Auth::id())->with('product')->get();
-            return $cart;
-
-
+            
             return response()->json($cart, 200);
 
         } catch (\Exception $e) {
