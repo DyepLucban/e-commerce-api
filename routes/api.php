@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', 'AuthController@login');
-Route::get('/login/google', 'AuthController@redirectToProvider');
-Route::get('/login/google/callback', 'AuthController@handleProviderCallback');
+Route::get('/login/{service}', 'AuthController@redirectToProvider');
+Route::get('/login/{service}/callback', 'AuthController@handleProviderCallback');
 Route::resource('/send-email', 'EmailController');
 
 Route::middleware('auth:sanctum')->group(function () {
