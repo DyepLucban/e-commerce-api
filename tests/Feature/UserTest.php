@@ -19,7 +19,7 @@ class UserTest extends TestCase
     /** @test **/
     public function name_field_is_required()
     {
-        $this->post('/api/user', array_merge($this->data(), ['full_name' => '']))->assertStatus(422);
+        $response = $this->post('/api/user', array_merge($this->data(), ['full_name' => '']))->assertStatus(422);
     }
 
     /** @test **/

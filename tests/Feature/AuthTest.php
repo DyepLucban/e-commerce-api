@@ -17,6 +17,18 @@ class AuthTest extends TestCase
     }
 
     /** @test **/
+    public function a_successul_logout()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create(['address' => 'test address']);
+
+        $this->actingAs($user, 'sanctum');
+
+        $this->post('/api/logout')->assertStatus(200);
+    }    
+
+    /** @test **/
     public function email_field_is_required()
     {
         $this->post('/api/login', array_merge($this->data(), ['email' => '']))->assertStatus(422);
