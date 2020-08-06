@@ -31,17 +31,63 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function edit($id, $request)
     {
-        
+        try {
+            
+            $product = Product::where('id', $id)->first();
+
+            if ($product)
+            {
+                $product->product_name = $request['product_name'];
+                $product->product_price = $request['product_price'];
+                $product->product_desc = $request['product_desc'];
+                $product->save();
+
+                return response()->json(['message' => 'Product Successfully Updated!'], 200);
+            }
+
+            return response()->json(['message' => 'Product Not Found!'], 404);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function add($request)
     {
-        
+        try {
+            
+            $products = Product::create([
+                'product_name' => $request['prod_name'],
+                'product_price' => $request['prod_price'],
+                'product_desc' => $request['description'],
+            ]);
+
+            return response()->json('Product successfully added!', 200);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }        
     }
 
     public function delete($id)
     {
-        
+        try {
+
+            $product = Product::where('id', $id)->first();
+
+            if($product)
+            {
+                $product->delete();
+                
+                return response()->json('Product Successfully Deleted!', 200);
+
+            }
+
+            return response()->json('Product not found!', 404);
+            
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }            
 
 }

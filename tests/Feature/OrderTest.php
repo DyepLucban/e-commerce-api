@@ -13,11 +13,23 @@ class OrderTest extends TestCase
     use DatabaseTransactions;
 
     /** @test **/
+    public function show_all_ordered_items_by_authenticated_user()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create(['address' => 'test address', 'role' => 2]);
+
+        $this->actingAs($user, 'sanctum');
+
+        $this->get('/api/order')->assertStatus(200);
+    }    
+
+    /** @test **/
     public function checkout_all_items_in_cart()
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create(['address' => 'test address']);
+        $user = factory(User::class)->create(['address' => 'test address', 'role' => 2]);
 
         $this->actingAs($user, 'sanctum');
 

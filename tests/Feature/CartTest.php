@@ -46,7 +46,7 @@ class CartTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create(['address' => 'test address']);
+        $user = factory(User::class)->create(['address' => 'test address', 'role' => 2]);
 
         $this->actingAs($user, 'sanctum');        
     }

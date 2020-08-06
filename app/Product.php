@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'product_name', 'product_price', 'product_desc',
+    ];
+
     public function cart()
     {
     	return $this->hasMany('App\Cart');

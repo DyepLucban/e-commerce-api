@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -42,7 +43,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'prod_name' => 'required',
+            'prod_price' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors(),
+            ], 422);
+        }
+
+        return $this->productRepository->add($request->all());
     }
 
     /**
@@ -76,7 +90,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required',
+            'product_price' => 'required',
+            'product_desc' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors(),
+            ], 422);
+        }
+
+        return $this->productRepository->edit($id, $request->all());
     }
 
     /**
@@ -87,6 +113,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->productRepository->delete($id);
     }
 }

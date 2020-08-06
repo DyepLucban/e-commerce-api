@@ -49,7 +49,7 @@ class UserTest extends TestCase
     /** @test **/
     public function data_in_email_field_is_unique()
     {
-        $this->post('/api/user', array_merge($this->data(), ['email' => 'user@gmail.com']))->assertStatus(422);
+        $this->post('/api/user', array_merge($this->data(), ['email' => 'admin@gmail.com']))->assertStatus(422);
     }    
 
     private function data()
@@ -58,6 +58,7 @@ class UserTest extends TestCase
             'full_name' => 'Sample Name',
             'address' => 'Sample Address',
             'email' => 'sample@sample.com',
+            'role' => 2,
             'password' => bcrypt('password123'),
         ];
     }    

@@ -17,12 +17,33 @@ class AuthRepository implements AuthRepositoryInterface
 
             $user = User::where('email', $request['email'])->first();
 
-            if (!$user || !Hash::check($request['password'], $user->password))
-            {
-                return response()->json(['message' => 'Invalid Credentials'], 401);
+            if ($user) {
+
+                if($user->role != 1)
+                {
+                    if (!$user || !Hash::check($request['password'], $user->password))
+                    {
+                        return response()->json(['message' => 'Invalid Credentials'], 401);
+                    }
+                    
+                    return $user->createToken($request['device_name'])->plainTextToken;
+
+                } else {
+
+                    if (!$user || !Hash::check($request['password'], $user->password))
+                    {
+                        return response()->json(['message' => 'Invalid Credentials'], 401);
+                    }
+                    
+                    return response()->json([
+                        'token' => $user->createToken($request['device_name'])->plainTextToken,
+                        'auth' => true
+                    ], 200);
+                }
             }
-            
-            return $user->createToken($request['device_name'])->plainTextToken;
+
+            return response()->json(['Not a registered account'], 401);
+
 
         } catch (\Exception $e) {
             return $e->getMessage();

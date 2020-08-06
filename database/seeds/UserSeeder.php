@@ -13,10 +13,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'user',
-            'address' => 'sample address',
-            'email' => 'user@gmail.com',
+            'name' => 'Admin',
+            'address' => 'admin address',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
+            'role' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),            
         ]);

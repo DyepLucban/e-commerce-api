@@ -13,7 +13,15 @@ class UserRepository implements UserRepositoryInterface
 
     public function browse()
     {
+        try {
+            
+            $users = User::where('role', 2)->get();
 
+            return response()->json($users, 200);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();   
+        }
     }
 
     public function read($id)
@@ -34,6 +42,7 @@ class UserRepository implements UserRepositoryInterface
                 'name' => $request['full_name'],
                 'address' => $request['address'],
                 'email' => $request['email'],
+                'role' => 2,
                 'password' => Hash::make($request['password']),
             ]);
 

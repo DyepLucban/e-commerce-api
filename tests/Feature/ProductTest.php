@@ -15,7 +15,7 @@ class ProductTest extends TestCase
     /** @test **/
     public function show_all_products_on_authenticated_user()
     {
-        $user = factory(User::class)->create(['address' => 'test address']);
+        $user = factory(User::class)->create(['address' => 'test address', 'role' => 2]);
 
         $this->actingAs($user, 'sanctum');
 

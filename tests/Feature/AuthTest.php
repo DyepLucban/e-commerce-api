@@ -21,7 +21,7 @@ class AuthTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create(['address' => 'test address']);
+        $user = factory(User::class)->create(['address' => 'test address', 'role' => 2]);
 
         $this->actingAs($user, 'sanctum');
 
@@ -55,9 +55,10 @@ class AuthTest extends TestCase
     private function data()
     {
         return [
-            'email' => 'user@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => 'password',
             'device_name' => 'browser',
+            'role' => 1,
         ];
     }
 }
