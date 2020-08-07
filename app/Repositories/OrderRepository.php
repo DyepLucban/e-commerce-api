@@ -17,13 +17,25 @@ class OrderRepository implements OrderRepositoryInterface
     {
         try {
 
-            $orders = Order::where('user_id', Auth()->id())->get();
-
-            if ($orders)
+            if (Auth()->user()->role !== 1)
             {
-                return response()->json(json_decode($orders));
+                $orders = Order::where('user_id', Auth()->id())->get();
+
+                if (count($orders))
+                {
+                    foreach ($orders as $key => $value) {
+                        $data = json_decode($value->ordered_item);
+                    }
+
+                    return response()->json($data);
+                } else {
+                    return response()->json();
+                }
+
             } else {
-                return response()->json();
+                $orders = Order::all();
+
+                return response()->json($orders);
             }
 
         } catch (\Exception $e) {

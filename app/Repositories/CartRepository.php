@@ -16,6 +16,17 @@ class CartRepository implements CartRepositoryInterface
         try {
             
             $cart = Cart::where('user_id', Auth::id())->with('product')->get();
+
+            if(count($cart))
+            {
+                foreach ($cart as $key => $value) {
+                    $data[] = $value->product;
+                    $data[$key]['quantity'] = $value->quantity;
+                    $data[$key]['cart_id'] = $value->id;
+                }
+    
+                return response()->json($data, 200);
+            }
             
             return response()->json($cart, 200);
 
@@ -60,9 +71,9 @@ class CartRepository implements CartRepositoryInterface
     public function delete($id)
     {
         try {
-
+            
             $cart = Cart::where('id', $id)->first();
-        
+
             if ($cart) {
 
                 $cart->delete();
